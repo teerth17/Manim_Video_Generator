@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - backend/.env
+    volumes:
+      - ./backend:/app/backend      # for hot‑reload (optional)
+      - ./manim:/app/manim
+      - ./videos:/app/videos
