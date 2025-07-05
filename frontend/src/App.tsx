@@ -28,6 +28,7 @@ function App() {
   const [prompt, setPrompt] = useState(savedPrompt);
   const [code, setCode] = useState(savedCode);
   const [videoUrl, setVideoUrl] = useState(savedVideoUrl);
+  const API_URL = import.meta.env.VITE_API_URL || '';
 
   const showToast = (message: string, type: 'error' | 'success' | 'warning' = 'error') => {
     toast[type](message, {
@@ -47,13 +48,14 @@ function App() {
       showToast("Please enter a prompt");
       return;
     }
+    
 
     localStorage.setItem('manimPrompt', prompt);
     try {
       setLoading(true);
       setGenerationStatus("Generating Manim code...");
-      
-      const res = await axios.post("/chat", { 
+     
+      const res = await axios.post(`${API_URL}/chat`, { 
         message: prompt 
       }, { 
         timeout: 30000 
@@ -93,7 +95,7 @@ function App() {
       setLoading(true);
       setGenerationStatus("Generating video from Manim script...");
       
-      const res = await axios.post("/generate", { 
+      const res = await axios.post(`${API_URL}/generate`, { 
         prompt: `\`\`\`python\n${manimCode}\n\`\`\`` 
       }, { 
         timeout: 120000 // 2 minute timeout for video generation
