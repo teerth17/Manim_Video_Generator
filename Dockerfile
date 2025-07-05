@@ -17,6 +17,15 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs
 RUN npm install -g typescript
 
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Add before CMD (after RUN mkdir)
+ENV NODE_ENV=production
+ENV PORT=3000
+
+# Update CMD to use environment port
+CMD ["sh", "-c", "node dist/index.js"]
 # Set working directory
 WORKDIR /app
 
