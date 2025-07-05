@@ -9,8 +9,16 @@ dotenv.config();
 
 const app = express();
 const port: number = parseInt(process.env.PORT || '3000', 10);
+const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://your-frontend-domain.vercel.app'] 
+    : ['http://localhost:5173', 'http://localhost:3000'],
+  credentials: true
+}));
+
+
 app.use(express.json());
 
 app.use("/chat", chatRouter);
