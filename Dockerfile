@@ -37,8 +37,7 @@ COPY backend /app/backend
 
 # Install Node.js dependencies
 WORKDIR /app/backend
-RUN npm install
-
+RUN npm ci --include=dev
 # Build TypeScript
 RUN npm run build
 
